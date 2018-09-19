@@ -42,7 +42,7 @@ from: http://www.golangprograms.com/how-to-count-number-of-repeating-words-in-a-
 
 func main() {
 	var fileName string //Declare a string to hold the name of the textfile
-	fmt.Println("Enter the name of .txt file that contains the book you want me to read: (Hint: Try 'warandpeace.txt')") //Prompt user to enter filename
+	fmt.Println("Enter the name of .txt file that contains the book you want me to read: \n(Hint: Try 'warandpeace.txt' or 'thetorylover.txt')") //Prompt user to enter filename
 	_, err := fmt.Scan(&fileName) //read keyboard input
 	rawData, err := ioutil.ReadFile(fileName) //attempt to open the file
 	if err != nil { //Handle file opening error
