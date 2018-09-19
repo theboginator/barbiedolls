@@ -58,6 +58,10 @@ func main() {
 	trimmedData := reg.ReplaceAllString(unsortedWords, " ")//Read the unsorted data and throw out any chars that do not match with previously defined keeper data
 	datamap := wordCounter(trimmedData) //Create a map file containing all trimmed data
 
+	for index, element := range(datamap){ //Print each word and its associated count to the command windows
+		fmt.Println(index, " => ", element)
+	}
+
 	outputFile, err := os.Create("wordcount.txt") //Create a 'wordcount.txt' file to write our datamap to
 	if err != nil { //handle file creation error
 		log.Fatal("There was a problem creating the file. ", err)
