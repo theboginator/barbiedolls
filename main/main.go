@@ -1,7 +1,7 @@
 /*
 Word Counting application that prompts user for text file and counts the words in it
-Returns currently as screen output. Working on implememting writing to output file feature
-v0.9.4
+Returns currently as wordcount.txt output.
+v1.0.0
 Jacob Bogner 9/18/2018
  */
 
@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -34,13 +35,14 @@ func wordCounter(data string) map[string]int {
 	return datamap
 }
 /*
-Word Counter function cited from: http://www.golangprograms.com/how-to-count-number-of-repeating-words-in-a-given-string.html
+Word Counter function based off example codes
+from: http://www.golangprograms.com/how-to-count-number-of-repeating-words-in-a-given-string.html
  */
 
 
 func main() {
 	var fileName string //Declare a string to hold the name of the textfile
-	fmt.Println("Enter the name of .txt file that contains the book you want me to read: ") //Prompt user to enter filename
+	fmt.Println("Enter the name of .txt file that contains the book you want me to read: (Hint: Try 'warandpeace.txt')") //Prompt user to enter filename
 	_, err := fmt.Scan(&fileName) //read keyboard input
 	rawData, err := ioutil.ReadFile(fileName) //attempt to open the file
 	if err != nil { //Handle file opening error
@@ -56,8 +58,15 @@ func main() {
 	trimmedData := reg.ReplaceAllString(unsortedWords, " ")//Read the unsorted data and throw out any chars that do not match with previously defined keeper data
 	datamap := wordCounter(trimmedData) //Create a map file containing all trimmed data
 
+	outputFile, err := os.Create("wordcount.txt") //Create a 'wordcount.txt' file to write our datamap to
+	if err != nil { //handle file creation error
+		log.Fatal("There was a problem creating the file. ", err)
+	}
+	defer outputFile.Close()
 
-	//Alerts the user that the file has been saved to such and such file
-	fmt.Println("\nAttempted to write results to 'wordcount.txt'.")
+	for index, element := range(datamap){ //Print each word and its associated count to the text file
+		fmt.Fprintln(outputFile, index, " => ", element)
+	}
+	fmt.Println("\nAttempted to write results to 'wordcount.txt'.")//Declare an attempt was made to write the file
 
 }
