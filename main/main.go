@@ -58,7 +58,7 @@ func main() {
 	trimmedData := reg.ReplaceAllString(unsortedWords, " ")//Read the unsorted data and throw out any chars that do not match with previously defined keeper data
 	datamap := wordCounter(trimmedData) //Create a map file containing all trimmed data
 
-	for index, element := range(datamap){ //Print each word and its associated count to the command windows
+	for index, element := range(datamap){ //Print each word and its associated count to the command window
 		fmt.Println(index, " => ", element)
 	}
 
